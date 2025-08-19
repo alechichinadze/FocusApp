@@ -26,12 +26,11 @@ body {
 
 .fullApp {
   box-sizing: border-box;
-
+  border: 1px solid yellow;
   padding: 0 10px 0 10px;
-
+  height: auto;
   width: 100%;
   max-width: 650px;
-  min-height: 100dvh;
 
   display: flex;
   flex-direction: column;
@@ -81,7 +80,8 @@ body {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  flex: 1;
+  height: auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
