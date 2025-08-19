@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="pomodoro.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="fullApp">
+      <div class="fullAppBtn">
+        <div>
+          <button id="notesBtn">Notes</button>
+        </div>
+        <div>
+          <button id="timerBtn">Timer</button>
+        </div>
+        <div>
+          <button id="statsBtn">Stats</button>
+        </div>
+      </div>
+      <div class="timerApp">
+        <div class="timer-box">
+          <svg
+            class="svg-wrapper"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 400 400"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <rect
+              class="progress"
+              x="8"
+              y="8"
+              width="384"
+              height="384"
+              rx="50%"
+              ry="50%"
+              pathLength="100"
+            />
+          </svg>
+
+          <div class="app">
+            <div class="top-buttons">
+              <button id="pomodoroBtn">Focus</button>
+              <button id="shortBreakBtn">Break</button>
+              <button id="longBreakBtn">Rest</button>
+            </div>
+            <div class="timer-wrapper">
+              <div class="timer" id="timer"></div>
+              <div class="timer hidden" id="shortBreakDisplay"></div>
+              <div class="timer hidden" id="longBreakDisplay"></div>
+            </div>
+
+            <div class="edit-section hidden" id="editSection">
+              <h2>Set Timer</h2>
+
+              <div class="input-group">
+                <label for="workDuration"> Focus: </label>
+                <input
+                  type="range"
+                  id="workDuration"
+                  value="25"
+                  min="1"
+                  max="60"
+                />
+                <span id="workValue">25</span>
+              </div>
+
+              <div class="input-group">
+                <label for="shortBreakDuration"> Break: </label>
+                <input
+                  type="range"
+                  id="shortBreakDuration"
+                  value="5"
+                  min="1"
+                  max="60"
+                />
+                <span id="shortValue">5</span>
+              </div>
+              <div class="input-group">
+                <label for="longBreakDuration"> Rest: </label>
+                <input
+                  type="range"
+                  id="longBreakDuration"
+                  value="15"
+                  min="1"
+                  max="60"
+                />
+                <span id="longValue">15</span>
+              </div>
+              <div class="input-group">
+                <label for="breakInterval"> Rest interval: </label>
+                <input
+                  type="range"
+                  id="breakInterval"
+                  value="4"
+                  min="2"
+                  max="8"
+                />
+                <span id="intervalValue">4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-buttons">
+          <button id="resetBtn" title="Reset">
+            <i class="fas fa-redo"></i>
+          </button>
+          <button id="startBtn">Start</button>
+
+          <button id="config" title="Settings">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div class="editButtons hidden">
+          <button id="saveSettingsBtn" class="saveChanges hidden">
+            <i class="fas fa-check"></i>
+          </button>
+          <button id="cancelBtn"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+
+      <div class="cont">
+        <div class="header">
+          <h1>Notebook</h1>
+
+          <div class="toggle-wrapper">
+            <input type="checkbox" id="themeToggle" />
+            <label for="themeToggle" class="toggle-switch"> </label>
+          </div>
+        </div>
+        <form class="form" action="">
+          <div class="input-wrapper">
+            <input
+              id="inpt1"
+              class="inpt"
+              type="text"
+              placeholder="Add a note"
+            />
+            <button class="addBtn" title="Add note">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="searchInput-wrapper">
+            <input
+              id="inpt2"
+              class="inpt"
+              type="text"
+              placeholder="Search notes"
+            />
+
+            <button class="sortBtn">
+              <span class="icon"
+                ><i class="fas fa-arrow-up-wide-short"></i
+              ></span>
+              <span class="sortText">Sort by date</span>
+            </button>
+          </div>
+        </form>
+        <div id="taskList"></div>
+        <div class="imgDiv">
+          <img src="img/noteguy.png" alt="" />
+          <p>Nothing here yet…</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="pomodoro.js"></script>
+  </body>
+</html>
