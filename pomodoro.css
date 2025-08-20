@@ -193,6 +193,9 @@ body {
   width: 100%;
   height: auto;
   margin-top: 15px;
+  background-color: rgba(25, 28, 38, 0.5);
+  border-radius: 15px;
+  padding: 10px;
 }
 
 .bottom-buttons button {
@@ -319,6 +322,9 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   height: auto;
   margin-top: 15px;
+  background-color: rgba(25, 28, 38, 0.5);
+  border-radius: 15px;
+  padding: 10px;
 }
 
 .editButtons button {
