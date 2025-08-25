@@ -21,16 +21,11 @@
 
   <body>
     <div class="fullApp">
-      <div class="fullAppBtn">
-        <div>
-          <button id="notesBtn">Notes</button>
-        </div>
-        <div>
-          <button id="timerBtn">Timer</button>
-        </div>
-        <div>
-          <button id="statsBtn">Stats</button>
-        </div>
+      <div class="nav">
+        <div class="nav-indicator"></div>
+        <button id="notesBtn" class="activeNav">Tasks</button>
+        <button id="timerBtn">Timer</button>
+        <button id="statsBtn">Stats</button>
       </div>
       <div class="timerApp">
         <div class="timer-box">
@@ -63,60 +58,13 @@
               <div class="timer hidden" id="shortBreakDisplay"></div>
               <div class="timer hidden" id="longBreakDisplay"></div>
             </div>
-
-            <div class="edit-section hidden" id="editSection">
-              <h2>Set Timer</h2>
-
-              <div class="input-group">
-                <label for="workDuration"> Focus: </label>
-                <input
-                  type="range"
-                  id="workDuration"
-                  value="25"
-                  min="1"
-                  max="60"
-                />
-                <span id="workValue">25</span>
-              </div>
-
-              <div class="input-group">
-                <label for="shortBreakDuration"> Break: </label>
-                <input
-                  type="range"
-                  id="shortBreakDuration"
-                  value="5"
-                  min="1"
-                  max="60"
-                />
-                <span id="shortValue">5</span>
-              </div>
-              <div class="input-group">
-                <label for="longBreakDuration"> Rest: </label>
-                <input
-                  type="range"
-                  id="longBreakDuration"
-                  value="15"
-                  min="1"
-                  max="60"
-                />
-                <span id="longValue">15</span>
-              </div>
-              <div class="input-group">
-                <label for="breakInterval"> Rest interval: </label>
-                <input
-                  type="range"
-                  id="breakInterval"
-                  value="4"
-                  min="2"
-                  max="8"
-                />
-                <span id="intervalValue">4</span>
-              </div>
+            <div class="startingTimer">
+              <span class="countdown"></span>
             </div>
           </div>
         </div>
         <div class="bottom-buttons">
-          <button id="resetBtn" title="Reset">
+          <button class="reset-button" id="resetBtn" title="Reset">
             <i class="fas fa-redo"></i>
           </button>
           <button id="startBtn">Start</button>
@@ -124,6 +72,74 @@
           <button id="config" title="Settings">
             <i class="fas fa-cog"></i>
           </button>
+        </div>
+
+        <div class="config-box hidden">
+          <div class="edit-section" id="editSection">
+            <h2>Set Timer</h2>
+
+            <div class="input-group">
+              <div>
+                <label for="workDuration"> Focus: </label>
+                <span id="workValue">25</span>
+              </div>
+              <div>
+                <input
+                  type="range"
+                  id="workDuration"
+                  value="25"
+                  min="1"
+                  max="60"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <div>
+                <label for="shortBreakDuration"> Break: </label>
+                <span id="shortValue">5</span>
+              </div>
+              <div>
+                <input
+                  type="range"
+                  id="shortBreakDuration"
+                  value="5"
+                  min="1"
+                  max="60"
+                />
+              </div>
+            </div>
+            <div class="input-group">
+              <div>
+                <label for="longBreakDuration"> Rest: </label>
+                <span id="longValue">15</span>
+              </div>
+              <div>
+                <input
+                  type="range"
+                  id="longBreakDuration"
+                  value="15"
+                  min="1"
+                  max="60"
+                />
+              </div>
+            </div>
+            <div class="input-group">
+              <div>
+                <label for="breakInterval"> Rest interval: </label>
+                <span id="intervalValue">4</span>
+              </div>
+              <div>
+                <input
+                  type="range"
+                  id="breakInterval"
+                  value="4"
+                  min="2"
+                  max="8"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div class="editButtons hidden">
           <button id="saveSettingsBtn" class="saveChanges hidden">
@@ -135,7 +151,7 @@
 
       <div class="cont">
         <div class="header">
-          <h1>Notebook</h1>
+          <h1>Tasklist</h1>
 
           <div class="toggle-wrapper">
             <input type="checkbox" id="themeToggle" />
@@ -172,12 +188,18 @@
         </form>
         <div id="taskList"></div>
         <div class="imgDiv">
-          <img src="img/noteguy.png" alt="" />
           <p>Nothing here yet…</p>
         </div>
       </div>
+      <div class="stats">
+        <h2>Stats</h2>
+        <div class="timerChart">
+          <canvas id="focusChart" width="400" height="200"></canvas>
+        </div>
+        <div class="taskChart"></div>
+      </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="pomodoro.js"></script>
   </body>
 </html>

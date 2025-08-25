@@ -53,33 +53,39 @@ bindSliderValue("shortBreakDuration", "shortValue");
 bindSliderValue("longBreakDuration", "longValue");
 bindSliderValue("breakInterval", "intervalValue");
 
+function timerRemove() {
+  startBtn.textContent = "Start";
+  document.querySelector(".progress").classList.remove("active-progress");
+  document.querySelectorAll(".timer").forEach((el) => {
+    el.classList.remove("active-timer");
+  });
+
+  clearInterval(intervalId);
+  intervalId = null;
+}
+function timerAdd() {
+  if (!intervalId) {
+  }
+}
 startBtn.addEventListener("click", function () {
   if (startBtn.textContent === "Start") {
     startBtn.textContent = "Stop";
-    document.querySelector(".progress").classList.add("active-progress");
-    startTimer();
+
     document.querySelectorAll(".timer").forEach((el) => {
-      el.classList.add("active-btn");
+      startTimer();
     });
   } else {
-    startBtn.textContent = "Start";
-    document.querySelector(".progress").classList.remove("active-progress");
-    document.querySelectorAll(".timer").forEach((el) => {
-      el.classList.remove("active-btn");
-    });
-
-    clearInterval(intervalId);
-    intervalId = null;
+    timerRemove();
   }
 });
 
 pomodoroBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
-  clearInterval(intervalId);
-  intervalId = null;
+  timerRemove();
+
   timer.textContent = `${String(workDuration.value).padStart(2, "0")}:00`;
-  startBtn.textContent = "Start";
+
   timer.classList.remove("hidden");
   shortBreakDisplay.classList.add("hidden");
   longBreakDisplay.classList.add("hidden");
@@ -97,9 +103,8 @@ pomodoroBtn.addEventListener("click", function (e) {
 shortBreakBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
-  clearInterval(intervalId);
-  intervalId = null;
-  startBtn.textContent = "Start";
+  timerRemove();
+
   shortBreakDisplay.textContent = `${String(shortBreakDuration.value).padStart(
     2,
     "0"
@@ -120,9 +125,8 @@ shortBreakBtn.addEventListener("click", function (e) {
 longBreakBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
-  clearInterval(intervalId);
-  intervalId = null;
-  startBtn.textContent = "Start";
+  timerRemove();
+
   longBreakDisplay.textContent = `${String(longBreakDuration.value).padStart(
     2,
     "0"
@@ -141,6 +145,8 @@ longBreakBtn.addEventListener("click", function (e) {
 });
 
 configTime.addEventListener("click", function () {
+  document.querySelector(".timer-box").classList.add("hidden");
+  document.querySelector(".config-box").classList.remove("hidden");
   document.querySelector(".top-buttons").classList.add("hidden");
   document.querySelector(".bottom-buttons").classList.add("hidden");
   document.querySelector(".editButtons").classList.remove("hidden");
@@ -148,7 +154,6 @@ configTime.addEventListener("click", function () {
   shortBreakDisplay.classList.add("hidden");
   longBreakDisplay.classList.add("hidden");
 
-  configSection.classList.remove("hidden");
   saveBtn.classList.remove("hidden");
 
   let ranges = document.querySelectorAll('input[type="range"]');
@@ -161,10 +166,12 @@ configTime.addEventListener("click", function () {
 });
 
 saveBtn.addEventListener("click", function () {
+  document.querySelector(".timer-box").classList.remove("hidden");
+  document.querySelector(".config-box").classList.add("hidden");
   document.querySelector(".top-buttons").classList.remove("hidden");
   document.querySelector(".bottom-buttons").classList.remove("hidden");
   document.querySelector(".editButtons").classList.add("hidden");
-  configSection.classList.add("hidden");
+
   timer.classList.remove("hidden");
 
   timer.textContent = `${String(workDuration.value).padStart(2, "0")}:00`;
@@ -188,9 +195,7 @@ saveBtn.addEventListener("click", function () {
 });
 
 resetBtn.addEventListener("click", function () {
-  startBtn.textContent = "Start";
-  clearInterval(intervalId);
-  intervalId = null;
+  timerRemove();
   pomodoroCount = 0;
 
   if (!timer.classList.contains("hidden")) {
@@ -211,6 +216,11 @@ let pomodoroCount = 0;
 
 function startTimer() {
   if (intervalId) return;
+  document.querySelector(".progress").classList.add("active-progress");
+
+  document.querySelectorAll(".timer").forEach((el) => {
+    el.classList.add("active-timer");
+  });
 
   let display;
   if (!timer.classList.contains("hidden")) {
@@ -290,6 +300,10 @@ themeToggle.addEventListener("change", () => {
   }
 }); //<= Theme toggle
 
+pomodoroBtn.classList.add("active-btn");
+shortBreakBtn.classList.remove("active-btn");
+longBreakBtn.classList.remove("active-btn");
+
 //RENDER
 function render(item) {
   let newEl = document.createElement("div");
@@ -311,23 +325,92 @@ function render(item) {
   taskDiv.textContent = item.note;
   newEl.appendChild(taskDiv);
 
+  let newElBtnDiv = document.createElement("div");
+  newElBtnDiv.className = "newElBtnDiv";
+  newEl.appendChild(newElBtnDiv);
+
+  let newElTimer = document.createElement("button");
+  newElTimer.innerHTML = '<i class="fas fa-stopwatch"></i>';
+  newElTimer.setAttribute("title", "Start timer");
+  newElTimer.className = "newElTimer";
+  newElBtnDiv.appendChild(newElTimer);
+
   let deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
   deleteBtn.setAttribute("title", "Delete note");
   deleteBtn.className = "deleteBtn";
-  newEl.appendChild(deleteBtn);
+  newElBtnDiv.appendChild(deleteBtn);
 
   if (item.done) {
     newEl.classList.add("striked");
   }
+  let holdTimer;
 
-  newEl.addEventListener("click", function (e) {
-    let container = e.target.closest(".newEl");
-    if (container) {
-      container.classList.toggle("striked");
-      item.done = container.classList.contains("striked");
-      localStorage.setItem("task", JSON.stringify(data));
-    }
+  newEl.addEventListener("touchstart", function (e) {
+    holdTimer = setTimeout(() => {
+      let container = e.target.closest(".newEl");
+      if (container) {
+        container.classList.toggle("striked");
+        item.done = container.classList.contains("striked");
+        localStorage.setItem("task", JSON.stringify(data));
+      }
+    }, 800);
+  });
+
+  newEl.addEventListener("touchmove", () => {
+    clearTimeout(holdTimer);
+  });
+  newEl.addEventListener("touchend", () => {
+    clearTimeout(holdTimer);
+  });
+
+  newEl.addEventListener("dblclick", () => {
+    newElTimer.click();
+  });
+
+  newElTimer.addEventListener("click", function (e) {
+    e.stopPropagation();
+
+    timerBtn.click();
+
+    document.querySelector(".timer-wrapper").style.display = "none";
+    document.querySelector(".top-buttons").style.display = "none";
+
+    document.querySelector(".progress")?.classList.remove("active-progress");
+    document
+      .querySelectorAll(".timer")
+      .forEach((el) => el.classList.remove("active-timer"));
+    resetBtn.click();
+    pomodoroBtn.classList.remove("active-btn");
+
+    configTime.disabled = true;
+    startBtn.disabled = true;
+    resetBtn.disabled = true;
+
+    let overlay = document.querySelector(".startingTimer");
+    let txt = overlay.querySelector(".countdown");
+    let n = 3;
+    txt.textContent = n;
+    overlay.style.display = "flex";
+
+    let timer = setInterval(() => {
+      n--;
+      if (n <= 0) {
+        clearInterval(timer);
+        overlay.style.display = "none";
+        setTimeout(() => {
+          configTime.disabled = false;
+          startBtn.disabled = false;
+          resetBtn.disabled = false;
+          pomodoroBtn.click();
+          startBtn.click();
+        }, 300);
+        document.querySelector(".timer-wrapper").style.display = "flex";
+        document.querySelector(".top-buttons").style.display = "flex";
+      } else {
+        txt.textContent = n;
+      }
+    }, 1000);
   });
 
   deleteBtn.addEventListener("click", function (e) {
@@ -432,19 +515,109 @@ searchInpt.addEventListener("input", function (e) {
   filtered.forEach(render);
 });
 
-const cont = document.querySelector(".cont");
-const timerApp = document.querySelector(".timerApp");
+const ctx = document.getElementById("focusChart").getContext("2d");
+const focusChart = new Chart(ctx, {
+  type: "bar", // можно 'line', 'pie', 'doughnut'
+  data: {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    datasets: [
+      {
+        label: "Hours Focused",
+        data: [2, 3, 1, 4, 2, 5, 3], // твои данные
+        backgroundColor: "rgba(139, 92, 246, 0.6)", // фиолетовый
+        borderColor: "rgba(139, 92, 246, 1)",
+        borderWidth: 2,
+        borderRadius: 6,
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#E1E2AB", // текст под тёмную тему
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#E1E2AB" },
+      },
+      y: {
+        ticks: { color: "#E1E2AB" },
+      },
+    },
+  },
+});
 
 let notesBtn = document.getElementById("notesBtn");
 let timerBtn = document.getElementById("timerBtn");
 let statsBtn = document.getElementById("statsBtn");
 
 notesBtn.addEventListener("click", function () {
-  timerApp.style = "display: none";
-  cont.style = "display: block";
+  document.querySelector(".timerApp").style = "display: none";
+  document.querySelector(".cont").style = "display: block";
+  document.querySelector(".stats").style = "display: none";
 });
 
 timerBtn.addEventListener("click", function () {
-  timerApp.style = "display: flex";
-  cont.style = "display: none";
+  document.querySelector(".timerApp").style = "display: flex";
+  document.querySelector(".cont").style = "display: none";
+  document.querySelector(".stats").style = "display: none";
+});
+
+statsBtn.addEventListener("click", function () {
+  document.querySelector(".timerApp").style = "display: none";
+  document.querySelector(".cont").style = "display: none";
+  document.querySelector(".stats").style = "display: flex";
+});
+
+let indicator = document.querySelector(".nav-indicator");
+let buttons = document.querySelectorAll(".nav button");
+
+buttons.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    let { offsetLeft } = btn;
+    indicator.style.transform = `translateX(${offsetLeft}px)`;
+  });
+});
+const firstBtn = buttons[0];
+indicator.style.transform = `translateX(${firstBtn.offsetLeft}px)`;
+indicator.style.width = `${firstBtn.offsetWidth}px`;
+
+let tabs = [notesBtn, timerBtn, statsBtn];
+let currentIndex = 0;
+
+function goTo(index) {
+  if (index < 0 || index >= tabs.length) return;
+  currentIndex = index;
+  tabs[currentIndex].click();
+}
+
+let startX = 0;
+let startY = 0;
+
+document.addEventListener("touchstart", (e) => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+});
+
+document.addEventListener("touchend", (e) => {
+  let endX = e.changedTouches[0].clientX;
+  let endY = e.changedTouches[0].clientY;
+
+  let dx = endX - startX;
+  let dy = endY - startY;
+
+  // если свайп больше по горизонтали
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) {
+      // влево → следующая вкладка
+      goTo(currentIndex + 1);
+    } else {
+      // вправо → предыдущая вкладка
+      goTo(currentIndex - 1);
+    }
+  }
 });
