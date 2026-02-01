@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Document</title>
-
-    <link rel="stylesheet" href="pomodoro.css" />
-
+    <link rel="stylesheet" href="../styles/main.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -18,188 +19,143 @@
       rel="stylesheet"
     />
   </head>
-
   <body>
-    <div class="fullApp">
-      <div class="nav">
-        <div class="nav-indicator"></div>
-        <button id="notesBtn" class="activeNav">Tasks</button>
-        <button id="timerBtn">Timer</button>
-        <button id="statsBtn">Stats</button>
-      </div>
-      <div class="timerApp">
-        <div class="timer-box">
-          <svg
-            class="svg-wrapper"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 400 400"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <rect
-              class="progress"
-              x="8"
-              y="8"
-              width="384"
-              height="384"
-              rx="50%"
-              ry="50%"
-              pathLength="100"
-            />
-          </svg>
+    <nav class="nav">
+      <div class="nav-indicator"></div>
+      <button id="tasksBtn">Tasks</button>
+      <button id="timerBtn">Timer</button>
+      <button id="settingsBtn">Set</button>
+    </nav>
 
-          <div class="app">
-            <div class="top-buttons">
-              <button id="pomodoroBtn">Focus</button>
-              <button id="shortBreakBtn">Break</button>
-              <button id="longBreakBtn">Rest</button>
-            </div>
-            <div class="timer-wrapper">
-              <div class="timer" id="timer"></div>
-              <div class="timer hidden" id="shortBreakDisplay"></div>
-              <div class="timer hidden" id="longBreakDisplay"></div>
-            </div>
-            <div class="startingTimer">
-              <span class="countdown"></span>
-            </div>
+    <!-- === TASKS FIRST === -->
+    <section class="taskPage">
+      <h1 class="taskTitle">Tasks</h1>
+
+      <div class="taskList" id="taskList"></div>
+
+      <form class="taskForm" action="">
+        <div class="inputWrapper">
+          <input
+            id="taskInput"
+            class="taskInput"
+            type="text"
+            autocomplete="off"
+            placeholder="Add a task"
+          />
+          <button id="addBtn" class="addBtn" title="Add task">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+    <!-- === TIMER SECOND === -->
+    <section class="timerPage">
+      <div class="timerBox">
+        <svg
+          class="timerProgress"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 400 400"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <circle
+            class="progress"
+            cx="200"
+            cy="200"
+            r="190"
+            stroke-width="5"
+            fill="none"
+          />
+        </svg>
+
+        <div class="timerApp">
+          <div class="timerModes">
+            <button id="focusBtn">Focus</button>
+            <button id="breakBtn">Break</button>
+            <button id="restBtn">Rest</button>
           </div>
-        </div>
-        <div class="bottom-buttons">
-          <button class="reset-button" id="resetBtn" title="Reset">
-            <i class="fas fa-redo"></i>
-          </button>
-          <button id="startBtn">Start</button>
 
-          <button id="config" title="Settings">
-            <i class="fas fa-cog"></i>
-          </button>
-        </div>
-
-        <div class="config-box hidden">
-          <div class="edit-section" id="editSection">
-            <h2>Set Timer</h2>
-
-            <div class="input-group">
-              <div>
-                <label for="workDuration"> Focus: </label>
-                <span id="workValue">25</span>
-              </div>
-              <div>
-                <input
-                  type="range"
-                  id="workDuration"
-                  value="25"
-                  min="1"
-                  max="60"
-                />
-              </div>
-            </div>
-
-            <div class="input-group">
-              <div>
-                <label for="shortBreakDuration"> Break: </label>
-                <span id="shortValue">5</span>
-              </div>
-              <div>
-                <input
-                  type="range"
-                  id="shortBreakDuration"
-                  value="5"
-                  min="1"
-                  max="60"
-                />
-              </div>
-            </div>
-            <div class="input-group">
-              <div>
-                <label for="longBreakDuration"> Rest: </label>
-                <span id="longValue">15</span>
-              </div>
-              <div>
-                <input
-                  type="range"
-                  id="longBreakDuration"
-                  value="15"
-                  min="1"
-                  max="60"
-                />
-              </div>
-            </div>
-            <div class="input-group">
-              <div>
-                <label for="breakInterval"> Rest interval: </label>
-                <span id="intervalValue">4</span>
-              </div>
-              <div>
-                <input
-                  type="range"
-                  id="breakInterval"
-                  value="4"
-                  min="2"
-                  max="8"
-                />
-              </div>
-            </div>
+          <div class="timerDisplay">
+            <div class="timer" id="focusDisplay"></div>
+            <div class="timer hidden" id="breakDisplay"></div>
+            <div class="timer hidden" id="restDisplay"></div>
           </div>
-        </div>
-        <div class="editButtons hidden">
-          <button id="saveSettingsBtn" class="saveChanges hidden">
-            <i class="fas fa-check"></i>
-          </button>
-          <button id="cancelBtn"><i class="fas fa-times"></i></button>
+
+          <div class="timerCountdown">
+            <span class="countdown"></span>
+          </div>
         </div>
       </div>
 
-      <div class="cont">
-        <div class="header">
-          <h1>Tasklist</h1>
+      <div class="timerControls">
+        <button class="resetBtn" id="resetBtn" title="Reset">
+          <i class="fas fa-undo-alt"></i>
+        </button>
+        <button id="startBtn">
+          <i class="fas fa-play"></i>
+        </button>
+        <button id="nextBtn" title="Next mode">
+          <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+    </section>
+    <!-- === SETTINGS LAST === -->
+    <section class="setPage">
+      <div class="savedMsg">Changes saved</div>
 
-          <div class="toggle-wrapper">
-            <input type="checkbox" id="themeToggle" />
-            <label for="themeToggle" class="toggle-switch"> </label>
+      <div class="edit-section" id="editSection">
+        <h2>Set Timer</h2>
+        <div class="input-group">
+          <div>
+            <label for="focusDuration"> Focus: </label>
+            <span id="workValue">25</span>
           </div>
-        </div>
-        <form class="form" action="">
-          <div class="input-wrapper">
+          <div>
             <input
-              id="inpt1"
-              class="inpt"
-              type="text"
-              placeholder="Add a note"
+              type="range"
+              id="focusDuration"
+              value="25"
+              min="1"
+              max="60"
             />
-            <button class="addBtn" title="Add note">
-              <i class="fas fa-plus"></i>
-            </button>
           </div>
-          <div class="searchInput-wrapper">
-            <input
-              id="inpt2"
-              class="inpt"
-              type="text"
-              placeholder="Search notes"
-            />
+        </div>
+        <div class="input-group">
+          <div>
+            <label for="breakDuration"> Break: </label>
+            <span id="shortValue">5</span>
+          </div>
+          <div>
+            <input type="range" id="breakDuration" value="5" min="1" max="60" />
+          </div>
+        </div>
+        <div class="input-group">
+          <div>
+            <label for="restDuration"> Rest: </label>
+            <span id="longValue">15</span>
+          </div>
+          <div>
+            <input type="range" id="restDuration" value="15" min="1" max="60" />
+          </div>
+        </div>
+        <div class="input-group">
+          <div>
+            <label for="restInterval"> Rest interval: </label>
+            <span id="intervalValue">4</span>
+          </div>
+          <div>
+            <input type="range" id="restInterval" value="4" min="2" max="8" />
+          </div>
+        </div>
+      </div>
 
-            <button class="sortBtn">
-              <span class="icon"
-                ><i class="fas fa-arrow-up-wide-short"></i
-              ></span>
-              <span class="sortText">Sort by date</span>
-            </button>
-          </div>
-        </form>
-        <div id="taskList"></div>
-        <div class="imgDiv">
-          <p>Nothing here yet…</p>
-        </div>
+      <div class="editButtons">
+        <button id="saveSetBtn" class="saveChanges">
+          <i class="fas fa-check"></i>
+        </button>
+        <button id="cancelSetBtn"><i class="fas fa-times"></i></button>
       </div>
-      <div class="stats">
-        <h2>Stats</h2>
-        <div class="timerChart">
-          <canvas id="focusChart" width="400" height="200"></canvas>
-        </div>
-        <div class="taskChart"></div>
-      </div>
-    </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="pomodoro.js"></script>
+    <script type="module" src="/scripts/main.js"></script>
   </body>
 </html>

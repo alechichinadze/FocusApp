@@ -1,0 +1,181 @@
+/* ========================= */
+/*          SETTINGS         */
+/* ========================= */
+
+.savedMsg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  padding: 18px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    visibility 0s linear 0.4s;
+}
+
+.savedMsg.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.setPage {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100dvh;
+  padding: 10px;
+}
+
+.edit-section {
+  width: 100%;
+  max-width: 450px;
+  padding: 25px;
+  margin-inline: 10px;
+  border-radius: 20px;
+  background: var(--card-bg-soft);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--card-border-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.edit-section h2 {
+  margin: 6px 0 10px;
+  color: var(--accent-primary);
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-group label,
+.input-group span {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  outline: none;
+  border: none;
+}
+
+/* Chrome/Safari thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.editButtons {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  max-width: max-content;
+}
+
+.editButtons button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  width: 120px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.editButtons > :first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+.editButtons > :last-child {
+  border-radius: 0 15px 15px 0;
+}
+
+.editButtons button:active {
+  transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+  .edit-section {
+    background: var(--card-bg-solid);
+  }
+}

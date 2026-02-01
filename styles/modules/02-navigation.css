@@ -1,0 +1,83 @@
+/* =========================
+   NAV
+========================= */
+
+.nav {
+  position: fixed;
+  top: 15px;
+  z-index: 2;
+  width: calc(100% - 15px);
+
+  padding-inline: 5px;
+  padding-block: 0;
+
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  border-radius: 30px;
+
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+/* NAV INDICATOR */
+
+.nav-indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+
+  width: calc(33% - 5px);
+  border-radius: 30px;
+
+  background: rgba(95, 55, 170, 1);
+  box-shadow: 0 0 5px rgba(95, 55, 170, 1);
+
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+/* NAV BUTTONS */
+
+.nav button {
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+  padding: 5px 0;
+
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-primary);
+
+  background: transparent;
+  border: none;
+  border-radius: 30px;
+
+  cursor: pointer;
+  outline: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   NAV — DESKTOP
+========================= */
+
+@media (min-width: 768px) {
+  .nav {
+    top: 0;
+    width: 768px;
+    margin-top: unset;
+    padding: 5px;
+
+    border-radius: 0 0 15px 15px;
+  }
+
+  .nav-indicator {
+    border-radius: 0 0 15px 15px;
+  }
+}
